@@ -1,0 +1,136 @@
+<!-- Import Polymer -->
+<link rel="import" href="../../polymer/polymer.html">
+
+<!-- Define your custom element -->
+<polymer-element name="bit-avatar" attributes="user-id provider name size gravatar-rating gravatar-default gravatar-force-default">
+
+<template>
+	<style>
+		:host {
+			display: inline-block;
+			line-height: 0;
+		}
+		img {
+			max-width: 100%;
+		}
+	</style>
+	<img id="avatar" alt="{{name}}">
+</template>
+<script>
+
+	var Gravatar = {
+		validDefaults: ['404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro', 'blank'],
+		validRatings: ['g', 'pg', 'r', 'x'],
+		baseUrl: window.location.protocol === 'https:' ? 'https://secure.gravatar.com/avatar/' : 'http://www.gravatar.com/avatar/',
+		url: function(id, size, rating, useDefault, forceDefault) {
+			var source = this.baseUrl + id;
+			source += addQuerystringParameter(source, 's') + size;
+			if (rating !== null) {
+				var rating = rating.toLowerCase();
+				if (this.validRatings.indexOf(rating) !== -1) {
+					source += addQuerystringParameter(source, 'r') + rating;
+				}
+			}
+			if (useDefault !== null) {
+				useDefault = useDefault.toLowerCase();
+				if (this.validDefaults.indexOf(useDefault) !== -1 || useDefault.indexOf('http') !== -1) {
+					source += addQuerystringParameter(source, 'd') + useDefault;
+				}
+			}
+			if (forceDefault !== null) {
+				source += addQuerystringParameter(source, 'f') + 'y';
+			}
+			return source;
+		}
+	};
+
+	var FacebookAvatar = {
+		baseUrl: window.location.protocol + "//graph.facebook.com/USER_ID/picture",
+		validSizes: ['small', 'normal', 'large', 'square'],
+		url: function(id, size) {
+			var source = this.baseUrl.replace('USER_ID', id);
+			if (this.validSizes.indexOf(size) !== -1) {
+				source += addQuerystringParameter(source, 'type') + size;
+			}
+			return source;
+		}
+	};
+
+	var TwitterAvatar = {
+		baseUrl: window.location.protocol + "//twitter.com/api/users/profile_image/USER_ID",
+		validSizes: ['mini', 'normal', 'bigger', 'original'],
+		url: function(id, size) {
+			var source = this.baseUrl.replace('USER_ID', id);
+			if (this.validSizes.indexOf(size) !== -1) {
+				source += addQuerystringParameter(source, 'size') + size;
+			}
+			return source;
+		}
+	};
+
+	var SkypeAvatar = {
+		baseUrl: window.location.protocol + "//api.skype.com/users/USER_ID/profile/avatar",
+		url: function(id) {
+			return this.baseUrl.replace('USER_ID', id);
+		}
+	};
+
+	var GoogleAvatar = {
+		jsonUrl: window.location.protocol + "//picasaweb.google.com/data/entry/api/user/USER_ID?alt=json",
+		url: function(id, size, callback) {
+			var json = this.jsonUrl.replace('USER_ID', id);
+			loadJSON(json, function(data) {
+				var image;
+				image = data.entry.gphoto$thumbnail.$t;
+				image = image.replace('s64', 's' + size);
+				callback(image);
+			});
+		}
+	};
+
+	function loadJSON(path, callback) {
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function() {
+			if (httpRequest.readyState === 4) {
+				if (httpRequest.status === 200) {
+					var data = JSON.parse(httpRequest.responseText);
+					if (callback) callback(data);
+				}
+			}
+		};
+		httpRequest.open('GET', path, true);
+		httpRequest.send();
+	};
+
+	function addQuerystringParameter(url, parameter) {
+		return ((url.indexOf('?') === -1) ? '?' + parameter + '=' : '&' + parameter + '=');
+	}
+
+	Polymer('bit-avatar', {
+		attached: function() {
+			var self = this;
+			if (self.provider === "facebook") {
+				self.$.avatar.src = FacebookAvatar.url(self['user-id'], self.size);
+			} else if (self.provider === "twitter") {
+				self.$.avatar.src = TwitterAvatar.url(self['user-id'], self.size);
+			} else if (self.provider === "google+") {
+				GoogleAvatar.url(self['user-id'], self.size, function(image) {
+					self.$.avatar.src = image;
+				});
+			} else if (self.provider === "skype") {
+				self.$.avatar.src = SkypeAvatar.url(self['user-id']);
+				} else { // Default to gravatar
+					self.$.avatar.src = Gravatar.url(self['user-id'],
+						self.size,
+						self['gravatar-rating'],
+						self['gravatar-default'],
+						self['gravatar-force-default']
+						);
+				}
+			}
+		});
+
+</script>
+
+</polymer-element>
+

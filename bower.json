@@ -1,6 +1,6 @@
 {
     "name": "bit-avatar",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A custom webcomponent for avatars. Currently full support for Gravatar, facebook, twitter, google+ and skype avatars.",
     "license": "MIT",
     "main": "dist/bit-avatar.html",
