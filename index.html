@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>&lt;bit-avatar&gt;</title>
+
+	<!-- Importing Web Component's Polyfill -->
+	<script src="bower_components/platform/platform.js"></script>
+
+	<!-- Importing Custom Elements -->
+	<link rel="import" href="src/bit-avatar.html">
+</head>
+<body>
+
+	<!-- Using Custom Elements -->
+	<div>
+		<h2>Gravatar</h2>
+		<bit-avatar user-id="316ea180b1865e34d04cb03d29d903f8" gravatar-default="https://nb.gravatar.com/userimage/17279422/08251c481b0fb6e950dc70977f37740c.jpg" gravatar-force-default name="Håkon Bogsrud"></bit-avatar>
+		<bit-avatar user-id="316ea180b1865e34d04cb03d29d903f8" size="200"></bit-avatar>
+		<bit-avatar user-id="316ea180b1865e34d04cb03d29d903f8" gravatar-default="mm" gravatar-force-default size="200"></bit-avatar>
+		<bit-avatar user-id="invalid_hash" size="200"></bit-avatar>
+	</div>
+
+	<div>
+		<h2>Google+</h2>
+		<bit-avatar provider="google+" user-id="107170007380891284979" size="200"></bit-avatar>
+	</div>
+
+	<div>
+		<h2>Facebook</h2>
+		<bit-avatar provider="facebook" user-id="hbogs" size="normal"></bit-avatar>
+	</div>
+
+	<div>
+		<h2>Skype</h2>
+		<bit-avatar provider="skype" user-id="h.bogs"></bit-avatar>
+	</div>
+
+	<div>
+		<h2>Twitter</h2>
+		<bit-avatar provider="twitter" user-id="hbogs" size="original"></bit-avatar>
+	</div>
+
+
+</body>
+</html>
