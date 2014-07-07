@@ -26,7 +26,7 @@
 			var source = this.baseUrl + id;
 			source += addQuerystringParameter(source, 's') + size;
 			if (rating !== null) {
-				var rating = rating.toLowerCase();
+				rating = rating.toLowerCase();
 				if (this.validRatings.indexOf(rating) !== -1) {
 					source += addQuerystringParameter(source, 'r') + rating;
 				}
@@ -100,7 +100,7 @@
 		};
 		httpRequest.open('GET', path, true);
 		httpRequest.send();
-	};
+	}
 
 	function addQuerystringParameter(url, parameter) {
 		return ((url.indexOf('?') === -1) ? '?' + parameter + '=' : '&' + parameter + '=');
@@ -127,7 +127,11 @@
 						self['gravatar-force-default']
 						);
 				}
-			}
+			},
+		attributeChanged: function() {
+			/// just do same thing if any of the arguments change
+			this.attached();
+		}
 		});
 
 </script>
