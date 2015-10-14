@@ -40,7 +40,7 @@ Or [download as ZIP](https://github.com/hbogs/bit-avatar/archive/master.zip).
 
 Attribute     | Options     | Default      | Description
 ---           | ---         | ---          | ---
-`user-id`     | *string*   | *None*        | Gravatar: Email hash.<br>Facebook: Facebook ID.<br>Skype: Skype username.<br>Twitter: Twitter username.<br>Google+: Google ID. To find your Google ID, go to [https://picasaweb.google.com/data/entry/api/user/XXX?alt=json](https://picasaweb.google.com/data/entry/api/user/XXX?alt=json) where XXX is your Google username. Your ID will be at the bottom (gphoto$user).
+`user-id`     | *string*   | *None*        | Gravatar: Email hash.<br>Facebook: Facebook ID. [Find my ID](http://findmyfbid.com/ "Find my Facebook ID")<br>Skype: Skype username.<br>Twitter: Twitter username.<br>Google+: Google ID. To find your Google ID, go to [https://picasaweb.google.com/data/entry/api/user/XXX?alt=json](https://picasaweb.google.com/data/entry/api/user/XXX?alt=json) where XXX is your Google username. Your ID will be at the bottom (gphoto$user).
 `provider`    | `gravatar`, `facebook`, `google+`, `twitter`, `skype` | `gravatar` | What provider to use when fetching the avatar.
 `name` | *string* | '' | The name for the avatar user (alt-attribute)
 `size` | *int* OR *string* (facebook: `small`, `normal`, `large`, `square`), (twitter: `mini`, `normal`, `bigger`, `original`) | | Facebook and twitter uses strings. Gravatar and google+ uses an int. Skype has no size options.<br> Facebook sizes: small=80\*auto, normal=100\*auto, large=200\*auto, square=50\*50.<br> Twitter sizes: mini=24\*24, normal=48\*48, bigger=73\*73, original=original size.
