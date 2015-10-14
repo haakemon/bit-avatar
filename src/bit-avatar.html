@@ -57,7 +57,7 @@
 	};
 
 	var TwitterAvatar = {
-		baseUrl: window.location.protocol + "//twitter.com/api/users/profile_image/USER_ID",
+		baseUrl: window.location.protocol + "//twitter.com/USER_ID/profile_image",
 		validSizes: ['mini', 'normal', 'bigger', 'original'],
 		url: function(id, size) {
 			var source = this.baseUrl.replace('USER_ID', id);
